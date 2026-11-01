@@ -1,0 +1,46 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            style="@style/Title"
+            android:text="Регистрация" />
+        <TextView
+            style="@style/Body"
+            android:text="Лабораторная 2 · Задание 1" />
+        <EditText
+            android:id="@+id/name"
+            style="@style/Field"
+            android:hint="Имя"
+            android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/age"
+            style="@style/Field"
+            android:hint="Возраст"
+            android:inputType="number" />
+        <CheckBox
+            android:id="@+id/agree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="Согласен с правилами" />
+        <Button
+            android:id="@+id/submit"
+            style="@style/Action"
+            android:text="Отправить" />
+        <TextView
+            android:id="@+id/result"
+            style="@style/Body"
+            android:text="Заполните форму и примите правила." />
+        <Button
+            android:id="@+id/navigation"
+            style="@style/Action"
+            android:text="Задание 2 · Передача текста" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,31 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            style="@style/Title"
+            android:text="Передача текста" />
+        <TextView
+            style="@style/Body"
+            android:text="Лабораторная 2 · Задание 2" />
+        <EditText
+            android:id="@+id/message"
+            style="@style/Field"
+            android:hint="Введите сообщение"
+            android:inputType="textMultiLine" />
+        <Button
+            android:id="@+id/go"
+            style="@style/Action"
+            android:text="Перейти" />
+        <TextView
+            android:id="@+id/status"
+            style="@style/Body"
+            android:text="Текст будет передан во вторую Activity." />
+    </LinearLayout>
+</ScrollView>

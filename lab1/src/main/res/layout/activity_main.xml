@@ -1,0 +1,25 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            style="@style/Title"
+            android:text="Hello, Android!" />
+        <TextView
+            style="@style/Body"
+            android:text="Лабораторная работа 1" />
+        <TextView
+            android:id="@+id/greeting"
+            style="@style/Body"
+            android:text="Hello World!" />
+        <TextView
+            style="@style/Body"
+            android:text="Харлов Алексей · 24140" />
+    </LinearLayout>
+</ScrollView>

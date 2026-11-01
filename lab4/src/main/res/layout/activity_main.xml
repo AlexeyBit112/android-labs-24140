@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+    <TextView
+        style="@style/Title"
+        android:text="Заметки в SQLite" />
+    <TextView
+        style="@style/Body"
+        android:text="Лабораторная 4 · Часть 1" />
+    <EditText
+        android:id="@+id/title"
+        style="@style/Field"
+        android:hint="Заголовок"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/content"
+        style="@style/Field"
+        android:hint="Текст заметки"
+        android:inputType="textMultiLine"
+        android:minLines="2"
+        android:gravity="top" />
+    <Button
+        android:id="@+id/add"
+        style="@style/Action"
+        android:text="Добавить" />
+    <Button
+        android:id="@+id/update"
+        style="@style/Action"
+        android:text="Обновить" />
+    <Button
+        android:id="@+id/delete"
+        style="@style/Action"
+        android:text="Удалить" />
+    <TextView
+        android:id="@+id/status"
+        style="@style/Body"
+        android:text="Выберите заметку в списке для изменения." />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

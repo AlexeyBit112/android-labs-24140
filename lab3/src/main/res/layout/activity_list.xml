@@ -1,0 +1,31 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+    <TextView
+        style="@style/Title"
+        android:text="Список заметок" />
+    <TextView
+        style="@style/Body"
+        android:text="Лабораторная 3 · Задание 2" />
+    <EditText
+        android:id="@+id/newNote"
+        style="@style/Field"
+        android:hint="Новая заметка"
+        android:inputType="text" />
+    <Button
+        android:id="@+id/add"
+        style="@style/Action"
+        android:text="Добавить" />
+    <TextView
+        android:id="@+id/empty"
+        style="@style/Body"
+        android:text="Список пуст. Добавьте первую заметку." />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>
