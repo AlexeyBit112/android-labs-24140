@@ -2,7 +2,7 @@
 
 Харлов Алексей, группа 24140.
 
-## Задача и устройство приложения
+## Работа с заметками
 
 Заметки хранятся в штатной SQLite через `SQLiteOpenHelper`, без Room. Таблица `notes` содержит `id`, `title`, `content` и `timestamp`. RecyclerView выводит заметки в порядке последнего изменения. Нажатие на строку выбирает запись и переносит данные в поля формы.
 
@@ -58,7 +58,7 @@ class NotesDbHelper(context: Context) : SQLiteOpenHelper(context, "notes.db", nu
 
 `onCreate` создаёт таблицу. В учебном `onUpgrade` старая таблица удаляется и создаётся заново. Такая стратегия теряет данные и годится только для этого учебного примера.
 
-Курсор обёрнут в `use`. Соединение не хранится в поле класса. Для каждой фоновой операции Activity создаёт helper и закрывает его через `use` после запроса и повторной загрузки списка. Параметры `id = ?` передаются отдельно от SQL, поэтому значения не склеиваются с текстом запроса.
+После чтения `cursor.use` закрывает курсор. Activity создаёт helper на время операции и тоже закрывает его через `use`. Для поиска записи используется условие `id = ?`, а сам ID передаётся отдельным аргументом.
 
 Вызовы БД выполняются в `withContext(Dispatchers.IO)`. После возврата корутина продолжает работу на главном потоке, где обновляются поля и адаптер. Срок жизни корутины связан с Activity через `lifecycleScope`.
 
@@ -125,7 +125,9 @@ class NotesAdapter(private val onSelect: (Note) -> Unit) : ListAdapter<Note, Not
 }
 ```
 
-В этой работе применяется `ListAdapter` с `DiffUtil`: после запроса передаётся новый список, а различия вычисляются по ID и содержимому. В лабе 3 ручные уведомления адаптера оставлены в соответствии с отдельным заданием.
+После запроса новый список передаётся в `ListAdapter`. `DiffUtil` сравнивает ID и содержимое заметок и обновляет изменившиеся строки.
+
+Запуск в Android Studio: [код и приложение в эмуляторе](screenshots/studio/lab4.png).
 
 ## Проверка
 
@@ -137,13 +139,35 @@ class NotesAdapter(private val onSelect: (Note) -> Unit) : ListAdapter<Note, Not
 <img src="screenshots/lab4/05-updated.png" width="280" alt="Изменённая запись">
 <img src="screenshots/lab4/07-deleted.png" width="280" alt="Удаление второй записи">
 
-Тест проверяет CRUD на уровне helper, включая кавычки в тексте и отсутствующий ID. Затем проверяется пользовательский сценарий: ошибка пустого заголовка, добавление, выбор, изменение и удаление. Отдельно проверяется чтение данных новым helper после закрытия предыдущего. Снимок [после пересоздания Activity](screenshots/lab4/06-after-recreate.png) показывает сохранённую запись.
+Проверены добавление, выбор, изменение и удаление заметки, а также ошибка пустого заголовка. В тесте helper отдельно проверяются кавычки в тексте и обращение к несуществующему ID. Запись остаётся в базе [после пересоздания Activity](screenshots/lab4/06-after-recreate.png).
 
 Дополнительные проверки: [горизонтальный экран](screenshots/lab4/08-landscape.png) и [данные после остановки процесса](screenshots/lab4/09-after-process-restart.png).
 
 ## Сравнение с Room
 
-В текущем `NotesDbHelper.kt` 38 непустых строк без комментариев. Вместе с моделью `Note.kt` — 40. Для сравнения приведён [эскиз Room](room-comparison.kt): 19 непустых строк для модели, DAO и объявления базы. Это сравнение исходного кода слоя хранения, без импортов Room, зависимостей, KSP, UI и сгенерированного кода. Эскиз не входит в приложение и не выдаётся за собранную реализацию.
+В `NotesDbHelper.kt` получилось 38 непустых строк без комментариев. Вместе с моделью `Note` получается 40 строк. Вариант с Room ниже занимает 19 строк без импортов и настроек KSP. Это пример для сравнения, в приложение он не подключён.
+
+```kotlin
+@Entity(tableName = "notes")
+data class Note(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val title: String,
+    val content: String,
+    val timestamp: Long
+)
+@Dao
+interface NotesDao {
+    @Insert suspend fun insert(note: Note): Long
+    @Query("SELECT * FROM notes ORDER BY timestamp DESC, id DESC")
+    suspend fun getAllNotes(): List<Note>
+    @Update suspend fun update(note: Note): Int
+    @Delete suspend fun delete(note: Note): Int
+}
+@Database(entities = [Note::class], version = 1)
+abstract class NotesDatabase : RoomDatabase() {
+    abstract fun notesDao(): NotesDao
+}
+```
 
 У прямой SQLite видны SQL, порядок чтения полей и момент закрытия ресурсов. Это даёт полный контроль, но добавляет повторяющийся код и риск ошибиться в имени столбца, преобразовании данных или обработке Cursor. Room сокращает эту часть и проверяет запросы при сборке. Для сложной модели данных он обычно удобнее.
 

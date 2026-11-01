@@ -4,11 +4,11 @@
 
 ## Задача
 
-Создать первое Android-приложение на Kotlin и вывести Hello World. Это предполагаемый объём первой работы по предоставленному описанию. Сама ссылка ведёт к вводным занятиям по Kotlin, а отдельного файла с заданием нет.
+Создать приложение на Kotlin с надписью Hello World.
 
 ## Реализация
 
-`MainActivity` наследуется от `ComponentActivity`. В `onCreate` подключается XML-макет с текстом приветствия. Здесь используется обычный `TextView`; Compose не требуется для последующих выданных заданий, которые разбирают XML и View.
+Экран описан в XML. В `MainActivity` метод `onCreate` вызывает `setContentView` и загружает эту разметку. Приветствие выводится в обычном `TextView`.
 
 ```kotlin
 package ru.kharlov.lab1
@@ -27,12 +27,14 @@ class MainActivity : ComponentActivity() {
 
 Исходники: [MainActivity](../lab1/src/main/java/ru/kharlov/lab1/MainActivity.kt), [XML-макет](../lab1/src/main/res/layout/activity_main.xml).
 
+Запуск в Android Studio: [код и приложение в эмуляторе](screenshots/studio/lab1.png).
+
 ## Результат
 
-Тест проверяет содержимое `TextView`. Снимок сделан с запущенного приложения в Android Emulator.
+При запуске появляется экран с приветствием и подписью студента. Тест проверяет текст Hello World.
 
 <img src="screenshots/lab1/01-hello-world.png" width="320" alt="Экран приложения Hello World">
 
 ## Вывод
 
-Activity служит точкой входа в экран. Вызов `setContentView` связывает Kotlin-класс с ресурсом разметки, а Android загружает интерфейс при запуске Activity.
+Разметка экрана хранится в XML, а `setContentView` подключает её в Activity.
