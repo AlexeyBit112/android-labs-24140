@@ -66,27 +66,27 @@ class NotesDbHelper(context: Context) : SQLiteOpenHelper(context, "notes.db", nu
 
 ```kotlin
 private fun operation(clearForm: Boolean = true, action: (NotesDbHelper) -> String) {
-        if (busy) return
-        busy = true
-        controls(false)
-        lifecycleScope.launch {
-            try {
-                val (message, notes) = withContext(Dispatchers.IO) {
-                    // Отдельный helper на операцию закрывается в том же потоке.
-                    NotesDbHelper(applicationContext).use { db -> action(db) to db.getAllNotes() }
-                }
-                adapter.submitList(notes)
-                if (clearForm) {
-                    selectedId = null
-                    findViewById<EditText>(R.id.title).text.clear()
-                    findViewById<EditText>(R.id.content).text.clear()
-                }
-                show(if (notes.isEmpty()) "$message. Список пуст" else "$message. Всего: ${notes.size}")
-            } catch (e: SQLiteException) {
-                show("Не удалось выполнить операцию с базой данных")
-            } finally { busy = false; controls(true) }
-        }
+    if (busy) return
+    busy = true
+    controls(false)
+    lifecycleScope.launch {
+        try {
+            val (message, notes) = withContext(Dispatchers.IO) {
+                // Отдельный helper на операцию закрывается в том же потоке.
+                NotesDbHelper(applicationContext).use { db -> action(db) to db.getAllNotes() }
+            }
+            adapter.submitList(notes)
+            if (clearForm) {
+                selectedId = null
+                findViewById<EditText>(R.id.title).text.clear()
+                findViewById<EditText>(R.id.content).text.clear()
+            }
+            show(if (notes.isEmpty()) "$message. Список пуст" else "$message. Всего: ${notes.size}")
+        } catch (e: SQLiteException) {
+            show("Не удалось выполнить операцию с базой данных")
+        } finally { busy = false; controls(true) }
     }
+}
 ```
 
 ## Адаптер списка
@@ -131,13 +131,17 @@ class NotesAdapter(private val onSelect: (Note) -> Unit) : ListAdapter<Note, Not
 
 ## Проверка
 
-<img src="screenshots/lab4/01-empty-database.png" width="280" alt="Пустая база">
-<img src="screenshots/lab4/02-title-required.png" width="280" alt="Ошибка пустого заголовка">
-<img src="screenshots/lab4/03-inserted.png" width="280" alt="Добавленная запись">
+<p>
+<img src="screenshots/lab4/01-empty-database.png" width="250" alt="Пустая база">
+<img src="screenshots/lab4/02-title-required.png" width="250" alt="Ошибка пустого заголовка">
+<img src="screenshots/lab4/03-inserted.png" width="250" alt="Добавленная запись">
+</p>
 
-<img src="screenshots/lab4/04-selected.png" width="280" alt="Выбранная запись">
-<img src="screenshots/lab4/05-updated.png" width="280" alt="Изменённая запись">
-<img src="screenshots/lab4/07-deleted.png" width="280" alt="Удаление второй записи">
+<p>
+<img src="screenshots/lab4/04-selected.png" width="250" alt="Выбранная запись">
+<img src="screenshots/lab4/05-updated.png" width="250" alt="Изменённая запись">
+<img src="screenshots/lab4/07-deleted.png" width="250" alt="Удаление второй записи">
+</p>
 
 Проверены добавление, выбор, изменение и удаление заметки, а также ошибка пустого заголовка. В тесте helper отдельно проверяются кавычки в тексте и обращение к несуществующему ID. Запись остаётся в базе [после пересоздания Activity](screenshots/lab4/06-after-recreate.png).
 
@@ -145,7 +149,7 @@ class NotesAdapter(private val onSelect: (Note) -> Unit) : ListAdapter<Note, Not
 
 ## Сравнение с Room
 
-В `NotesDbHelper.kt` получилось 38 непустых строк без комментариев. Вместе с моделью `Note` получается 40 строк. Вариант с Room ниже занимает 19 строк без импортов и настроек KSP. Это пример для сравнения, в приложение он не подключён.
+При текущем форматировании в `NotesDbHelper.kt` 33 непустые строки, ещё одна строка нужна для модели `Note`. В примере с Room ниже 19 строк. В обоих случаях не учитываются объявления пакета, импорты и комментарии. Сравнивается слой работы с данными, без интерфейса, зависимостей и настройки генерации кода. Это пример для сравнения, в четвёртую лабу он не подключён.
 
 ```kotlin
 @Entity(tableName = "notes")

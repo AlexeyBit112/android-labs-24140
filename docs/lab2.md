@@ -8,22 +8,54 @@
 
 Перед отправкой `trim()` убирает пробелы по краям имени. Возраст проверяется через `toIntOrNull()`: допустимы числа от 0 до 150. При пустом имени, неправильном возрасте или снятой галочке появляется ошибка. Результат выводится в Toast и остаётся под кнопкой.
 
+Основные элементы [XML-макета](../lab2/src/main/res/layout/activity_main.xml) находятся внутри `ScrollView`. Размеры полей и кнопок заданы стилями `Field` и `Action`:
+
+```xml
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+    <EditText
+        android:id="@+id/name"
+        style="@style/Field"
+        android:hint="Имя"
+        android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/age"
+        style="@style/Field"
+        android:hint="Возраст"
+        android:inputType="number" />
+    <CheckBox
+        android:id="@+id/agree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="Согласен с правилами" />
+    <Button
+        android:id="@+id/submit"
+        style="@style/Action"
+        android:text="Отправить" />
+</LinearLayout>
+```
+
 Обработка кнопки в [MainActivity](../lab2/src/main/java/ru/kharlov/lab2/MainActivity.kt):
 
 ```kotlin
 findViewById<Button>(R.id.submit).setOnClickListener {
-            val enteredName = name.text.toString().trim()
-            val enteredAge = age.text.toString().trim().toIntOrNull()
-            val message = when {
-                enteredName.isEmpty() -> "Введите имя"
-                enteredAge == null || enteredAge !in 0..150 -> "Введите возраст от 0 до 150"
-                !agree.isChecked -> "Примите правила"
-                else -> "Имя: $enteredName, Возраст: $enteredAge, Правила: Да"
-            }
-            findViewById<TextView>(R.id.result).text = message
-            feedback?.cancel()
-            feedback = Toast.makeText(this, message, Toast.LENGTH_LONG).also { it.show() }
-        }
+    val enteredName = name.text.toString().trim()
+    val enteredAge = age.text.toString().trim().toIntOrNull()
+    val message = when {
+        enteredName.isEmpty() -> "Введите имя"
+        enteredAge == null || enteredAge !in 0..150 -> "Введите возраст от 0 до 150"
+        !agree.isChecked -> "Примите правила"
+        else -> "Имя: $enteredName, Возраст: $enteredAge, Правила: Да"
+    }
+    findViewById<TextView>(R.id.result).text = message
+    feedback?.cancel()
+    feedback = Toast.makeText(this, message, Toast.LENGTH_LONG).also { it.show() }
+}
 ```
 
 У поля возраста задан `inputType="number"`. В тесте также подставляются буквы и слишком большое число: приложение должно показать ошибку и продолжить работу.
@@ -35,9 +67,11 @@ findViewById<Button>(R.id.submit).setOnClickListener {
 | Корректные поля без согласия | Примите правила |
 | Алексей, 20, согласие отмечено | Toast с введёнными данными |
 
-<img src="screenshots/lab2/01-form.png" width="280" alt="Форма">
-<img src="screenshots/lab2/03-invalid-age.png" width="280" alt="Ошибка возраста">
-<img src="screenshots/lab2/05-success.png" width="280" alt="Правильно заполненная форма">
+<p>
+<img src="screenshots/lab2/01-form.png" width="250" alt="Форма">
+<img src="screenshots/lab2/03-invalid-age.png" width="250" alt="Ошибка возраста">
+<img src="screenshots/lab2/05-success.png" width="250" alt="Правильно заполненная форма">
+</p>
 
 Остальные снимки ошибок: [пустое имя](screenshots/lab2/02-empty-name.png), [согласие](screenshots/lab2/04-consent-required.png).
 
@@ -112,9 +146,11 @@ class DetailActivity : ComponentActivity() {
 }
 ```
 
-<img src="screenshots/lab2/06-navigation-input.png" width="280" alt="Ввод сообщения">
-<img src="screenshots/lab2/07-detail.png" width="280" alt="Полученное сообщение">
-<img src="screenshots/lab2/08-return.png" width="280" alt="Возврат на экран ввода">
+<p>
+<img src="screenshots/lab2/06-navigation-input.png" width="250" alt="Ввод сообщения">
+<img src="screenshots/lab2/07-detail.png" width="250" alt="Полученное сообщение">
+<img src="screenshots/lab2/08-return.png" width="250" alt="Возврат на экран ввода">
+</p>
 
 Запуск в Android Studio: [код и приложение в эмуляторе](screenshots/studio/lab2.png).
 

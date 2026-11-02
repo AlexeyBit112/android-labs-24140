@@ -14,11 +14,13 @@
 
 ## Скриншоты
 
-<img src="docs/screenshots/lab1/01-hello-world.png" width="180" alt="Лаба 1: Hello World">
-<img src="docs/screenshots/lab2/05-success.png" width="180" alt="Лаба 2: заполненная форма">
-<img src="docs/screenshots/lab3/12-three-notes.png" width="180" alt="Лаба 3: список заметок">
-<img src="docs/screenshots/lab4/05-updated.png" width="180" alt="Лаба 4: заметка в SQLite">
-<img src="docs/screenshots/lab5/07-updated.png" width="180" alt="Лаба 5: заметка в Room">
+<p>
+<img src="docs/screenshots/lab1/01-hello-world.png" width="150" alt="Лаба 1: Hello World">
+<img src="docs/screenshots/lab2/05-success.png" width="150" alt="Лаба 2: заполненная форма">
+<img src="docs/screenshots/lab3/12-three-notes.png" width="150" alt="Лаба 3: список заметок">
+<img src="docs/screenshots/lab4/05-updated.png" width="150" alt="Лаба 4: заметка в SQLite">
+<img src="docs/screenshots/lab5/07-updated.png" width="150" alt="Лаба 5: заметка в Room">
+</p>
 
 В папках `lab1`-`lab5` внутри [docs/screenshots](docs/screenshots) находятся 45 снимков экранов приложений: формы, ошибки ввода, сохранение данных и работа со списками. Верхняя системная строка на этих снимках обрезана, содержимое экранов приложений сохранено.
 

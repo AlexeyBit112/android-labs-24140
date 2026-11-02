@@ -89,13 +89,13 @@ class NotesRepository(private val dao: NoteDao) {
 
 ```kotlin
 fun insert(title: String, content: String) {
-        val heading = title.trim()
-        if (heading.isEmpty()) { notice.value = "Введите заголовок"; return }
-        change {
-            val id = repository.insert(Note(title = heading, content = content))
-            if (id > 0) "Заметка добавлена" else "Не удалось добавить заметку"
-        }
+    val heading = title.trim()
+    if (heading.isEmpty()) { notice.value = "Введите заголовок"; return }
+    change {
+        val id = repository.insert(Note(title = heading, content = content))
+        if (id > 0) "Заметка добавлена" else "Не удалось добавить заметку"
     }
+}
 ```
 
 Для обновления берётся выбранная заметка и создаётся её копия с новым заголовком, текстом и временем. ID остаётся прежним. Удаление также использует выбранный объект с его ID. Если строка не найдена, приложение сообщает об этом.
@@ -104,23 +104,23 @@ fun insert(title: String, content: String) {
 
 ```kotlin
 private fun change(action: suspend () -> String) {
-        if (working.value == true) return
-        viewModelScope.launch {
-            working.value = true
-            try {
-                val text = action()
-                selected.value = null
-                notice.value = text
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Log.e("RoomNotes", "Database operation failed", e)
-                notice.value = "Не удалось выполнить операцию с базой данных"
-            } finally {
-                working.value = false
-            }
+    if (working.value == true) return
+    viewModelScope.launch {
+        working.value = true
+        try {
+            val text = action()
+            selected.value = null
+            notice.value = text
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e("RoomNotes", "Database operation failed", e)
+            notice.value = "Не удалось выполнить операцию с базой данных"
+        } finally {
+            working.value = false
         }
     }
+}
 ```
 
 Методы DAO объявлены как `suspend`. Room выполняет SQL в своих фоновых исполнителях, поэтому запросы не блокируют главный поток. Пока операция идёт, кнопки и поля временно отключены. При ошибке введённый текст остаётся в форме.
@@ -131,18 +131,20 @@ private fun change(action: suspend () -> String) {
 
 ```kotlin
 viewModel.allNotes.observe(this) { notes ->
-            adapter.submitList(notes)
-            findViewById<TextView>(R.id.count).text = getString(R.string.count_notes, notes.size)
-        }
+    adapter.submitList(notes)
+    findViewById<TextView>(R.id.count).text = getString(R.string.count_notes, notes.size)
+}
 ```
 
 [NotesAdapter.kt](../lab5/src/main/java/ru/kharlov/lab5/NotesAdapter.kt) использует `ListAdapter` и `DiffUtil`. Нажатие на строку передаёт выбранную заметку во ViewModel, после чего заголовок и текст появляются в полях. Выбор сохраняется при повороте экрана.
 
 ## Проверка
 
-<img src="screenshots/lab5/04-added.png" width="280" alt="Добавленная заметка Room">
-<img src="screenshots/lab5/07-updated.png" width="280" alt="Изменённая заметка Room">
-<img src="screenshots/lab5/09-deleted.png" width="280" alt="Удаление выбранной заметки">
+<p>
+<img src="screenshots/lab5/04-added.png" width="250" alt="Добавленная заметка Room">
+<img src="screenshots/lab5/07-updated.png" width="250" alt="Изменённая заметка Room">
+<img src="screenshots/lab5/09-deleted.png" width="250" alt="Удаление выбранной заметки">
+</p>
 
 | Действие | Результат |
 |---|---|

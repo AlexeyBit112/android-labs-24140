@@ -90,12 +90,16 @@ class MainActivity : ComponentActivity() {
 }
 ```
 
-<img src="screenshots/lab3/04-preferences-saved.png" width="280" alt="Сохранение SharedPreferences">
-<img src="screenshots/lab3/05-preferences-loaded.png" width="280" alt="Загрузка SharedPreferences">
-<img src="screenshots/lab3/07-cleared.png" width="280" alt="Очистка SharedPreferences">
+<p>
+<img src="screenshots/lab3/04-preferences-saved.png" width="250" alt="Сохранение SharedPreferences">
+<img src="screenshots/lab3/05-preferences-loaded.png" width="250" alt="Загрузка SharedPreferences">
+<img src="screenshots/lab3/07-cleared.png" width="250" alt="Очистка SharedPreferences">
+</p>
 
-<img src="screenshots/lab3/06-file-saved.png" width="280" alt="Сохранение в файл">
-<img src="screenshots/lab3/08-file-loaded.png" width="280" alt="Загрузка файла">
+<p>
+<img src="screenshots/lab3/06-file-saved.png" width="250" alt="Сохранение в файл">
+<img src="screenshots/lab3/08-file-loaded.png" width="250" alt="Загрузка файла">
+</p>
 
 Сценарии ошибок: [нет значения SP](screenshots/lab3/01-no-preferences.png), [нет файла](screenshots/lab3/02-no-file.png), [пустой ввод](screenshots/lab3/03-empty-input.png), [ошибка записи](screenshots/lab3/09-write-error.png), [ошибка чтения](screenshots/lab3/10-read-error.png).
 
@@ -196,9 +200,11 @@ class ListActivity : ComponentActivity() {
 }
 ```
 
-<img src="screenshots/lab3/11-empty-list.png" width="280" alt="Пустой список">
-<img src="screenshots/lab3/12-three-notes.png" width="280" alt="Три заметки">
-<img src="screenshots/lab3/13-note-deleted.png" width="280" alt="Удаление средней заметки">
+<p>
+<img src="screenshots/lab3/11-empty-list.png" width="250" alt="Пустой список">
+<img src="screenshots/lab3/12-three-notes.png" width="250" alt="Три заметки">
+<img src="screenshots/lab3/13-note-deleted.png" width="250" alt="Удаление средней заметки">
+</p>
 
 Список сохраняется в Bundle при пересоздании экрана, включая поворот. При новом запуске после завершения задачи он пуст: в этом задании используется коллекция в памяти. Постоянное хранение списка реализовано отдельно в лабе 4.
 
