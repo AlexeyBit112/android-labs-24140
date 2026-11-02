@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Лаба 5 Room</string>
+    <string name="notes_title">Заметки в Room</string>
+    <string name="lab_caption">Лабораторная 5</string>
+    <string name="title_hint">Заголовок</string>
+    <string name="content_hint">Текст заметки</string>
+    <string name="add">Добавить</string>
+    <string name="update">Обновить</string>
+    <string name="delete">Удалить</string>
+    <string name="select_hint">Выберите заметку в списке для изменения.</string>
+    <string name="count_empty">Всего: 0</string>
+    <string name="count_notes">Всего: %1$d</string>
+</resources>
